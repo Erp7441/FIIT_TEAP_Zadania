@@ -1,0 +1,7 @@
+
+kc:S5276:"Limplicit conversion from 'unsigned long long' to 'double' may lose precision(’•ˆûÿÿÿÿ8×¢¿¹ñ1
+kc:S5276:"Limplicit conversion from 'unsigned long long' to 'double' may lose precision(’•ˆûÿÿÿÿ8×¢¿¹ñ1
+fc:S5276Y"Limplicit conversion from 'unsigned long long' to 'double' may lose precision(ŒÀ“‡8×¢¿¹ñ1
+Tc:S10794"5Add a field width specifier to this "%s" placeholder.(‚Ùå©şÿÿÿÿ8Ù¢¿¹ñ1
+sc:S995X"ZMake the type of this parameter a pointer-to-const. The current type of "str" is "char *".(½Ûâ8Ú¢¿¹ñ1
+Sc:S3584:"4Potential leak of memory pointed to by 'line.string'(’•ˆûÿÿÿÿ8›£¿¹ñ1
