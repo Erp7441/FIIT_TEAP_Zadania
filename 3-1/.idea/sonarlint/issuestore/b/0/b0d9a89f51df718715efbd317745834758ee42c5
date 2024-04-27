@@ -1,0 +1,12 @@
+
+c:S3776è"TRefactor this function to reduce its Cognitive Complexity from 50 to the 25 allowed.(îñ÷™J$580b1577-5e51-425c-8881-364a65629c11
+…c:S134†"MRefactor this code to not nest more than 3 if|for|do|while|switch statements.(òñÛXJ$93ac9c79-2adb-4ca9-add8-01fc9fe10342
+†c:S134"MRefactor this code to not nest more than 3 if|for|do|while|switch statements.(‰Ë°ªJ$85b06b93-7c40-4bc7-989b-aeb05ea17c21
+‹c:S134“"MRefactor this code to not nest more than 3 if|for|do|while|switch statements.(¸ ÕƒûÿÿÿÿJ$22e5201d-e622-4dac-bf54-e212887b3917
+“c:S995è"ZMake the type of this parameter a pointer-to-const. The current type of "arr" is "char *".(îñ÷™J$c0e9a8de-627b-4ec8-bc43-22200e8001af
+tc:S1079¶"5Add a field width specifier to this "%s" placeholder.(¡±ÊÔøÿÿÿÿJ$a920112f-d508-4a55-91db-c6f0afec79ac
+•c:S108¸"\Fill this compound statement, remove it, or add a nested comment explaining why it is empty.(âÓéÒJ$31fa75a8-6ac5-4cf2-bb0f-3681539f436c
+lc:S5488é"2Call to 'malloc' has an allocation size of 0 bytes(İª÷ÇJ$79b11a03-e154-4bce-9e11-aa0f8760b357
+qc:S836ú"8Array access results in an undefined pointer dereference(·€—ÖJ$6384f2be-80f7-4e13-8a55-f2093bb8f7bb
+qc:S836ü"8Array access results in an undefined pointer dereference(ÑùÛ«J$f3698824-7a57-4b20-a95f-0e5be84d5434
+qc:S836ª"8Array access results in an undefined pointer dereference(¡”ŞƒJ$b9d21eb9-b6c3-4fdb-b044-372a6b1895a9
