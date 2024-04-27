@@ -1,0 +1,7 @@
+
+6c:S1481"unused variable 'start'(¡Ò¾Žüÿÿÿÿ8ÑÐŽ…ò1
+ic:S5276*"Jimplicit conversion loses integer precision: 'unsigned long long' to 'int'(“Ú¯Üÿÿÿÿÿ8ÑÐŽ…ò1
+vc:S995"]Make the type of this parameter a pointer-to-const. The current type of "binary" is "char *".(Ã†Æº8ÒÐŽ…ò1
+Kc:S886"2Refactor this loop so that it is less error-prone.(Ááöµ8ÒÐŽ…ò1
+dc:S924"FReduce the number of nested "break" statements from 2 to 1 authorized.(¥ŠÝÑüÿÿÿÿ8ÓÐŽ…ò1
+Tc:S1079)"5Add a field width specifier to this "%s" placeholder.(­ÆÕ úÿÿÿÿ8ÓÐŽ…ò1
