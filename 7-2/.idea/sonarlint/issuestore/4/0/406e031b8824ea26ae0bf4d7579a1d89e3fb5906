@@ -1,0 +1,7 @@
+
+ˆc:S5276"Cimplicit conversion from 'long long' to 'double' may lose precision(àØ£àıÿÿÿÿ8Ûî›©ó1J$0cc6dedb-413a-4af8-b646-ca4d00d5a41d
+†c:S5276"Aimplicit conversion loses integer precision: 'long long' to 'int'(ùÜ¼îøÿÿÿÿ8ëÍ¨§ó1J$5ce35511-4b47-456f-8b30-e2fed757b124
+†c:S5276"Aimplicit conversion loses integer precision: 'long long' to 'int'(õæÖÁüÿÿÿÿ8Ÿ”Ÿ©ó1J$60dbe9cb-ce2a-4703-9924-3b3ce92ce548
+oc:S3518"*Division by a tainted value, possibly zero(ùÜ¼îøÿÿÿÿ8Ÿù¥©ó1J$891b0d05-27ce-4f00-8e49-9c2c910aa6dd
+oc:S3518"*Division by a tainted value, possibly zero(·ÛÅüÿÿÿÿ8Ÿù¥©ó1J$070a2c46-c86f-466e-a425-6060363f699a
+‡c:S35195"BOut of bound memory access (accessed memory precedes memory block)(¥öéÛüÿÿÿÿ8Ÿù¥©ó1J$6781e5e4-eea8-4ec9-9c5b-83dfb7736185
