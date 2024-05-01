@@ -2,109 +2,110 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 #include <limits.h>
 
-#define SIZE 22
+#define SIZE 51
+#define POWER_SIZE 22
+#define OFFSET 3
 
-typedef struct node {
-	int completed;
-	struct node *left;
-	struct node *right;
-} Node;
+void run(size_t start, int parts);
 
-Node* root = NULL;
-int best = INT_MAX;
+typedef struct {
+	char num[SIZE];
+	size_t len;
+} Binary;
 
-Node* create_node(int completed)
+typedef struct {
+	char* val;
+	size_t len;
+} String;
+
+typedef struct {
+	Binary b;
+	int best;
+} Solution;
+
+const char* POWER_5[] = {
+	"1",
+	"101",
+	"11001",
+	"1111101",
+	"1001110001",
+	"110000110101",
+	"11110100001001",
+	"10011000100101101",
+	"1011111010111100001",
+	"111011100110101100101",
+	"100101010000001011111001",
+	"10111010010000111011011101",
+	"1110100011010100101001010001",
+	"1001000110000100111001110010101",
+	"101101011110011000100000111101001",
+	"11100011010111111010100100110001101",
+	"10001110000110111100100110111111000001",
+	"1011000110100010101111000010111011000101",
+	"110111100000101101101011001110100111011001",
+	"100010101100011100100011000001001000100111101",
+	"10101101011110001110101111000101101011000110001",
+	"1101100011010111001001101011011100010111011110101",
+};
+
+Solution s = { { { 0 }, 0}, 0 };
+
+String create(size_t len)
 {
-	Node* new = (Node*) malloc(sizeof(Node));
-	new->completed = completed;
-	new->left = NULL;
-	new->right = NULL;
-	return new;
+	return (String){ (char*) calloc(len + OFFSET, sizeof(char)), len };
 }
-void create_children(long long n, Node** node, int i, int j)
+
+String copy(const char* src)
 {
-	if (n % 2 == 0)
+	String destination = create(strlen(src));
+	strcpy(destination.val, src);
+	return destination;
+}
+
+void equal_parts(const char* curr, size_t len, size_t start, int parts, size_t rem)
+{
+	bool equal = true;
+	for(int i = 0; i < len; i++)
+		if(s.b.num[rem - i - 1] != curr[len - i - 1])
+		{
+			equal = false;
+			break;
+		}
+	if(equal) run(start + len, parts + 1);
+}
+
+void run(size_t start, int parts)
+{
+	size_t rem = s.b.len - start;
+	if (start == s.b.len)
 	{
-		if (!(*node)->left) (*node)->left = create_node(0);
-		*node = (*node)->left;
+		if(s.best > parts) s.best = parts;
 		return;
 	}
 
-	if (!(*node)->right) (*node)->right = create_node(j == 2 * i - 1 ? 1 : 0);
-	*node = (*node)->right;
-}
-Node* create_tree(size_t size)
-{
-	Node* base = create_node(1);
-	for (int i = 1; i < size; i++)
+	for(int curr_i = 0; curr_i < POWER_SIZE; curr_i++)
 	{
-		Node* node = base;
-		long long new_n = (long long) pow(5, i) / 2;
-		for (int j = 0; new_n > 0; j++, new_n /= 2)
-			create_children(new_n, &node, i, j);
-	}
-	return base;
-}
-
-void traverse_tree(char* w, int i, Node* node, int n)
-{
-	if (w[0] == '0') return;
-
-	size_t w_len = strlen(w);
-	if (i == w_len - 1 && n < best) best = n + 1;
-
-	for (int j = i; j < w_len - 1; j++)
-	{
-		if (w[j + 1] == '0')
-		{
-			if (!node->left) return;
-			node = node->left;
-		}
-		else if (node->right)
-		{
-			node = node->right;
-			if (node->completed && j + 2 == w_len && n < best)
-			{
-				best = n + 1;
-				return;
-			}
-			else if (node->completed) traverse_tree(w, j + 2, root, n + 1);
-		}
-		else
-		{
-			if (node->completed) traverse_tree(w, j + 1, root, n + 1);
-			return;
-		}
+		String curr = copy(POWER_5[curr_i]);
+		if(rem < curr.len) break;
+		if(rem - curr.len > 0 && s.b.num[rem - curr.len - 1] == '0') continue;
+		else equal_parts(curr.val, curr.len, start, parts, rem);
 	}
 }
 
-void swap(char* a, char* b)
+void evaluate()
 {
-	char temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-void reverse(char* s)
-{
-	size_t i, j;
-	for (i = 0, j = strlen(s) - 1; i < j; i++, j--) swap(&s[i], &s[j]);
+	s.b.len = strlen(s.b.num);
+	s.best = INT_MAX;
+	run(0, 0);
+	if(s.best == INT_MAX) printf("-1\n");
+	else printf("%i\n", s.best);
 }
 
 int main()
 {
-	root = create_tree(SIZE);
-	best = INT_MAX;
-
-	char in[50];
-	while(scanf("%s", &in) == 1)
-	{
-		reverse(in);
-		traverse_tree(in, 0, root, 0);
-		if (best == INT_MAX) printf("-1\n");
-		else printf("%d\n", best);
-		best = INT_MAX;
-	}
+	while (scanf("%s", s.b.num) > 0) evaluate();
+	return 0;
 }
