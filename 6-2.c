@@ -71,10 +71,10 @@ bool find_smaller_path(const Solution* s)
 
 /**
  * Rekurzivne generovanie vsetkych moznych ciest a nasledne vyskusanie pomocou backtrackingu.
- * Parameter `d` je aktuálna hlbka cesty. Ak je `d` rovne dlzke grafu, znamena to, ze bola najdena cesta a potom ju
+ * Parameter `d` je aktualna hlbka cesty. Ak je `d` rovne dlzke grafu, znamena to, ze bola najdena cesta a potom ju
  * skontroluje voci "doteraz" najkratsej ceste.
  *
- * @param d Aktuálna hlbka
+ * @param d Aktualna hlbka
  * @param s Instancia riesenia
  *
  * Zdroje:
@@ -84,13 +84,13 @@ bool find_smaller_path(const Solution* s)
 void backtrack(Solution* s, int d)
 {
 	if (!s || !s->len || !s->current_path || !s->found_path) return;
-	// Pokial sme dosiahli 5 vrcholov v ceste. Cize mame kompletnu cestu.
+	// Pokial sme dosiahli 5 vrcholov v ceste. Cize mame kompletnu cestu
 	if (d == s->len)
 	{
 		// Vypocitame cenu kompletnej cesty
 		int cost = get_path_len(s);
 
-		// Pokial je dlzka cesty kratsia nez do teraz najkratsia najdena cesta.
+		// Pokial je dlzka cesty kratsia nez do teraz najkratsia najdena cesta
 		// Zdroj: https://stackoverflow.com/questions/33660077/fast-way-to-copy-an-array
 		if (cost < s->min_found_path_len && (s->min_found_path_len = cost))
 			memcpy(s->found_path, s->current_path, s->len * sizeof(int));
@@ -99,7 +99,7 @@ void backtrack(Solution* s, int d)
 		else if (cost == s->min_found_path_len && find_smaller_path(s))
 			memcpy(s->found_path, s->current_path, s->len * sizeof(int));
 	}
-	// Vyskusame vsetky mozne kombinacie ako dalsi vrchol v momentalnej ceste
+		// Vyskusame vsetky mozne kombinacie dalsich vrcholov od momentalneho bodu v ceste
 	else for (int i = 1; i < s->len; i++)
 		// Pokial vrchol nie je v ceste tak o pridaj do momentalnej cesty
 		if ((d < 1 || !in_arr(d, s->current_path, i)) && (s->current_path[d] = i))
@@ -112,7 +112,7 @@ void load_vertices(Solution* s)
 	for (int i = 0; i < s->len; i++)
 		for (int j = 0; j < s->len; j++)
 			scanf("%d", &(s->paths[i][j]));
-	s->current_path[0] = 0; // Zaciname od prveho vrchola.
+	s->current_path[0] = 0; // Zaciname od prveho vrchola
 }
 
 void print_solution(Solution s)
