@@ -1,37 +1,23 @@
 #include <stdio.h>
 
-int reverse(int n)
+// Kym num nebude 0 budeme otacat cislo, potom ho returneme.
+int reverse(int num, int rev)
 {
-	int r = 0;
-	while (n > 0)
-	{
-		r = r * 10 + n % 10;
-		n /= 10;
-	}
-	return r;
+	return num == 0 ? rev : reverse(num / 10, rev * 10 + num % 10);
 }
 
-void print_var(int m, int curr, int k, int o)
+void variations(int n, int k, int curr, int original)
 {
-
-	if (curr == m)
-	{
-		int r = reverse(o);
-		while (r > 0)
-		{
-			printf("%d ", r % 10);
-			r /= 10;
-		}
-		printf("\n");
-	}
-	else for (int i = 0; i < k; i++) print_var(m, curr + 1, k, o * 10 + i + 1);
+	if (curr == n) for (int r = reverse(original, 0); r > 0; r /= 10)
+		printf("%d %s", r % 10, r / 10 == 0 ? "\n" : "");
+	else for (int i = 0; i < k; i++)
+		variations(n, k, curr + 1, original * 10 + i + 1);
 }
-
 
 int main()
 {
-	int n, k;
+	int n, k;  // N prvkove variace z mnoziny 1 az K
 	scanf("%d %d", &n, &k);
-	print_var(n, 0, k, 0);
+	variations(n, k, 0, 0);
 	return 0;
 }

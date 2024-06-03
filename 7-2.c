@@ -34,8 +34,6 @@ void rst(Solution* sol)
 		for (size_t j = 0; j <= MAX_DIVISOR; j++) sol->pal[i][j] = 0;
 }
 
-// https://www.programiz.com/c-programming/examples/power-number -- Asi rychlejsie ako POW z math.h
-
 void solve(Solution sol)
 {
 	for (size_t dpt = 0; dpt < sol.lo_half + 1; dpt++)
