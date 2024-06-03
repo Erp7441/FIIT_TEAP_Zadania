@@ -1,9 +1,0 @@
-cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -G Ninja -S C:\Users\Martin\Repos\FIIT\TEAP_Zadania\3-1 -B C:\Users\Martin\Repos\FIIT\TEAP_Zadania\3-1\cmake-build-debug
-CMake Error at CMakeLists.txt:7 (add_executable):
-  add_executable cannot create target "3_1" because another target with the
-  same name already exists.  The existing target is an executable created in
-  source directory "C:/Users/Martin/Repos/FIIT/TEAP_Zadania/3-1".  See
-  documentation for policy CMP0002 for more details.
-
-
--- Configuring incomplete, errors occurred!

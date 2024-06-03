@@ -1,3 +1,0 @@
-C:/Users/Martin/Repos/FIIT/TEAP_Zadania/3-1/cmake-build-debug/CMakeFiles/3_1.dir
-C:/Users/Martin/Repos/FIIT/TEAP_Zadania/3-1/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Martin/Repos/FIIT/TEAP_Zadania/3-1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
