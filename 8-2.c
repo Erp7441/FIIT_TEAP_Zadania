@@ -85,8 +85,6 @@ void push(int data)
 	sol.stack->len++;
 }
 
-
-
 // SINK a SOURCE (zalezi od 'type')
 size_t ev(Eval type)
 {
