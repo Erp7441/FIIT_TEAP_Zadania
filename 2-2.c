@@ -11,6 +11,13 @@
 #define BUFFER 256
 #define LINE_REGEX "^([0-9]+)(\\ )([0-9]+)$"
 
+/**
+ * Zdroj:
+ * https://www.geeksforgeeks.org/find-value-k-th-bit-binary-representation/
+ * https://www.geeksforgeeks.org/print-kth-least-significant-bit-number/
+ */
+#define GET_BIT(subset, pos, len) (subset >> (len - pos))
+
 typedef enum {
 	MATCHED = 0,
 	UNMACHED = 1,
@@ -36,11 +43,11 @@ typedef struct {
 
 typedef struct
 {
-	int count;
-	int value;
-	int prev;
-	int best;
+	int count; // Pocet znamienok v retazci
+	int value, best; // Momentalna a najlepsia hodnota
+	size_t prev; // Predchadzajuca pozicia v ramci binarneho retazca
 } Board;
+
 
 String create_str(const char* str)
 {
@@ -48,6 +55,15 @@ String create_str(const char* str)
 	s.val = strdup(str);
 	assert(s.val != NULL);
 	s.len = strlen(str);
+	return s;
+}
+
+String int_to_string(int num)
+{
+	char* str = (char*) calloc(BUFFER, sizeof(char));
+	sprintf(str, "%d", num);
+	String s = create_str(str);
+	free(str);
 	return s;
 }
 
@@ -59,14 +75,14 @@ void free_str(String* s)
 	s->len = 0;
 }
 
-int str_to_int(String str, int left, int right) {
-	if (str.val == NULL || left < 0 || right < 0 || left + right >= str.len) return -1;
+int str_to_int(String str, size_t left, size_t right) {
+	if (str.val == NULL || left + right >= str.len) return -1;
 	if (right == 0) return atoi(str.val + left);
 
 	// Orezavanie stringu z lava do prava
 	String copy = create_str(str.val+left);
 	char* temp= (char*) calloc(copy.len, sizeof(char));
-	// Prekopirovanie kids casti po len-right (oreze string z prava do leva)
+	// Prekopirovanie n casti po len-right (oreze string z prava do leva)
 	strncpy(temp, copy.val, copy.len - right);
 	free_str(&copy);
 	return atoi(temp);
@@ -89,9 +105,9 @@ Match load_line()
 	fgets(buf, BUFFER, stdin);
 	buf[strcspn(buf, "\n")] = '\0';
 
-	int suc = matches(buf, LINE_REGEX);
-	if (suc == INT_MIN) match.state = FAIL;
-	else if (suc)
+	int success = matches(buf, LINE_REGEX);
+	if (success == INT_MIN) match.state = FAIL;
+	else if (success)
 	{
 		match.state = MATCHED;
 		const char* value = NULL;
@@ -100,10 +116,17 @@ Match load_line()
 		match.line.target = atoi(target);
 		match.line.str = create_str(value);
 	}
-	else
-		match.line.str = create_str(buf);
+	else match.line.str = create_str(buf);
 
 	return match;
+}
+
+void add_plus_to_string(String str, size_t pos, size_t str_left, size_t str_right, Board* board)
+{
+	board->count++;  // Pocet znamienok v retazci
+	board->value += str_to_int(str, str_left, str_right);
+	// Nastavim novu poziciu predchadzajuceho bitu (aby som vedel odklial mam pokracovat shiftovanie)
+	board->prev = !pos ? board->prev : pos;
 }
 
 bool read_line()
@@ -120,7 +143,7 @@ bool read_line()
 		return false;
 	}
 
-	// Prechadzam cez vsetkych 2^kids podmnozin
+	// Prechadzam cez vsetkych 2^n podmnozin
 	for (size_t i = 0; i < pow(2, (double)line->str.len); i++)
 	{
 		board.prev = 0;
@@ -128,27 +151,20 @@ bool read_line()
 		board.count = 0;
 
 		// Prechadzam cez vsetky bitove podmnoziny
-		for (int j = 1; j <= line->str.len; j++)
-		{
-			// Ak je bit 1, pridam do sumy
-			if ((i >> (line->str.len - j)) & 1)
-			{
-				board.count++;
-				board.value += str_to_int(line->str, board.prev, (int)line->str.len - j);
-				board.prev = j; // Nastavim novu poziciu predchadzajuceho bitu
-			}
-		}
+		for (size_t pos = 1; pos <= line->str.len; pos++)
+			// Ak je least-significant bit 1, pridam do sumy  (resp. pridal som znamienko do vstupneho retazca)
+			// Zdroj: https://stackoverflow.com/questions/6647783/check-value-of-least-significant-bit-lsb-and-most-significant-bit-msb-in-c-c
+			if (GET_BIT(i, pos, line->str.len) % 2)
+				add_plus_to_string(line->str, pos, board.prev, line->str.len - pos, &board);
+			// Ak dalsia pozicia bude posledna. Vykoname posledne pridanie pluska
+			else if (pos+1 > line->str.len && line->str.len+1 != board.prev)
+				add_plus_to_string(line->str, 0, board.prev, 0, &board);
 
-		if (line->str.len != board.prev)
-		{
-			board.value += str_to_int(line->str, board.prev, 0);
-			board.count++;
-		}
+		// Kontrolujem ci som nasiel najlepsie riesenie. (Teda ci sa rovna value potrebnej target value a ci je pocet
+		// znamienok lepsi resp. najmensi)
 		if (board.value == line->target && board.count-1 < board.best) board.best = board.count-1;
 	}
-	if (board.best == INT_MAX) printf("IMPOSSIBLE\n");
-	else printf("%d\n", board.best);
-
+	printf("%s\n", board.best == INT_MAX ? "IMPOSSIBLE" : int_to_string(board.best).val);
 	free(line->str.val);
 	return true;
 }
@@ -156,9 +172,7 @@ bool read_line()
 
 int main()
 {
-	bool again = true;
-	do again = read_line();
-	while (again);
+	while (read_line());
 	return 0;
 }
 

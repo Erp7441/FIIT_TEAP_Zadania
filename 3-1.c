@@ -161,7 +161,7 @@ size_t notation(size_t len)
 	assert(matrix != NULL);
 
 	identify_digit(*matrix); // 0 - 2
-	for (int i = 3; i <= len; i++)  // 3 - kids
+	for (int i = 3; i <= len; i++)  // 3 - n
 		for (int j = 0; j < len - i + 1; ++j)
 			combs_on_diagonal(*matrix, i, j);
 	size_t res = matrix->v[0][len - 1];
