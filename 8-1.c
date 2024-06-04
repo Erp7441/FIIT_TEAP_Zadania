@@ -82,13 +82,13 @@ bool solve(const Solution* sol)
 int main()
 {
 	size_t activities, tables;
-    while (scanf("%zu %zu", &activities, &tables) > 0)
+	while (scanf("%zu %zu", &activities, &tables) > 0)
 	{
 		if (!RANGE(activities) || !RANGE(tables) ) continue;
 		Solution sol = create(activities, tables);
-        if (sol.layout[FRIENDS][0] > tables) printf("0\n");  // Mame viacej kamaratov ako stolov je automaticky fail
-        else if (solve(&sol)) printf("1\n");
+		if (sol.layout[FRIENDS][0] > tables) printf("0\n");  // Mame viacej kamaratov ako stolov je automaticky fail
+		else if (solve(&sol)) printf("1\n");
 		destroy(&sol);
-    }
-    return 0;
+	}
+	return 0;
 }

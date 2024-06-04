@@ -25,28 +25,28 @@ typedef struct {
 } Solution;
 
 const char* POWER_5[] = {
-	"1",
-	"101",
-	"11001",
-	"1111101",
-	"1001110001",
-	"110000110101",
-	"11110100001001",
-	"10011000100101101",
-	"1011111010111100001",
-	"111011100110101100101",
-	"100101010000001011111001",
-	"10111010010000111011011101",
-	"1110100011010100101001010001",
-	"1001000110000100111001110010101",
-	"101101011110011000100000111101001",
-	"11100011010111111010100100110001101",
-	"10001110000110111100100110111111000001",
-	"1011000110100010101111000010111011000101",
-	"110111100000101101101011001110100111011001",
-	"100010101100011100100011000001001000100111101",
-	"10101101011110001110101111000101101011000110001",
-	"1101100011010111001001101011011100010111011110101",
+		"1",
+		"101",
+		"11001",
+		"1111101",
+		"1001110001",
+		"110000110101",
+		"11110100001001",
+		"10011000100101101",
+		"1011111010111100001",
+		"111011100110101100101",
+		"100101010000001011111001",
+		"10111010010000111011011101",
+		"1110100011010100101001010001",
+		"1001000110000100111001110010101",
+		"101101011110011000100000111101001",
+		"11100011010111111010100100110001101",
+		"10001110000110111100100110111111000001",
+		"1011000110100010101111000010111011000101",
+		"110111100000101101101011001110100111011001",
+		"100010101100011100100011000001001000100111101",
+		"10101101011110001110101111000101101011000110001",
+		"1101100011010111001001101011011100010111011110101",
 };
 
 Solution sol = {{{0 }, 0}, 0 };
@@ -70,6 +70,8 @@ String copy(const char* src)
 	return destination;
 }
 
+// Toto plus run tvori rekuzivny flow ktory rozdeluje binarne cisla na casti. A cyklicky porovna voci predefinovanym
+// mocninam 5ky v bin. tvare ktore su definovane vyssie
 void equal_parts(const char* curr, size_t len, size_t start, int parts, size_t rem)
 {
 	for(int i = 0; i < len; i++)
@@ -77,21 +79,23 @@ void equal_parts(const char* curr, size_t len, size_t start, int parts, size_t r
 	run(start + len, parts + 1);
 }
 
+// Vyhodnocovanie casti binarneho cisla
 void run(size_t start, int parts)
 {
-	size_t rem = sol.b.len - start;
+	size_t rem = sol.b.len - start; // Zostavajuca dlzka
 	if (start == sol.b.len)
 	{
 		if(sol.best > parts) sol.best = parts;
 		return;
 	}
 
-	for(int curr_i = 0; curr_i < POWER_SIZE; curr_i++)
+	for(int i = 0; i < POWER_SIZE; i++)
 	{
-		String curr = copy(POWER_5[curr_i]);
-		if(rem < curr.len) break;
+		String curr = copy(POWER_5[i]);
+		if(rem < curr.len) break; // Ak ostava menej ako dlzka mocniny 5 koncime
+		// Ak ostava menej cifier na vyriesenie ako ma momentalna mocnina 5ky tak tuto iteraciu mozeme safely skipnut
 		if(rem - curr.len > 0 && sol.b.num[rem - curr.len - 1] == '0') continue;
-		else equal_parts(curr.val, curr.len, start, parts, rem);
+		else equal_parts(curr.val, curr.len, start, parts, rem); // Inak volame funkciu na porovnanie casti
 	}
 }
 

@@ -8,6 +8,10 @@
 // A a B hranice poctu ceruziek
 // Pre kolko cisiel X vyhra Bernard ak by hral s X ceruzkami a tahal ako prvy
 
+/**
+ * Zdroje:
+ * https://drive.google.com/file/d/1rc0YPPo5sPh29DuH24ruLgrPZTCaJ4NN/view?usp=sharing
+ */
 
 typedef struct
 {

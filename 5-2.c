@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <memory.h>
 
-// TODO:: dud
+// TODO:: Toto nie je moje dielo takze som to zmazal z turingu.
 
 #define SIZE 50
 

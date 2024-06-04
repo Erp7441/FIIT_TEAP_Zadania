@@ -154,13 +154,13 @@ void evaluate_likeness_lin(MaskedString* masked)
 			counters[VOWEL_I] = counters[VOWEL_I] != VOWEL_COUNT ? 0 : counters[VOWEL_I];
 			counters[CONSONANT_I] = counters[CONSONANT_I] != CONSONANT_COUNT ? 0 : counters[CONSONANT_I];
 		}
-		// Pokial som na samohlaske tak inkrementujem vowel counter a resetnem consonant counter
+			// Pokial som na samohlaske tak inkrementujem vowel counter a resetnem consonant counter
 		else if (masked->mask.val[i] == VOWEL)
 		{
 			counters[VOWEL_I]++;
 			counters[CONSONANT_I] = counters[CONSONANT_I] < CONSONANT_COUNT ? 0 : counters[CONSONANT_I];
 		}
-		// Obdobne operacie pre spoluhlasku ako pri samohlaske
+			// Obdobne operacie pre spoluhlasku ako pri samohlaske
 		else if (masked->mask.val[i] == CONSONANT)
 		{
 			counters[CONSONANT_I]++;
@@ -228,7 +228,7 @@ MaskedString load_masked_string()
 			unknown_sequence_count++;
 			input.unknown_sequence_size = MAX(unknown_sequence_count, input.unknown_sequence_size);
 		}
-		// Pokial som na samohlaske tak nastavim masku na VOWEL inkrementujem vowel counter a resetnem consonant counter
+			// Pokial som na samohlaske tak nastavim masku na VOWEL inkrementujem vowel counter a resetnem consonant counter
 		else if (IS_VOWEL(input.str.val[i]))
 		{
 			input.mask.val[i] = VOWEL;
@@ -246,11 +246,11 @@ MaskedString load_masked_string()
 				unknowns_before[VOWEL_I] = MAX(unknowns_before[VOWEL_I], unknowns_after[VOWEL_I]);
 				// Pokial consonant nesplna poctovu podmienku tak resetneme counter pre consonant
 				unknowns_before[CONSONANT_I] = unknowns_before[CONSONANT_I] + counters[CONSONANT_I] < CONSONANT_COUNT ? 0 :
-						unknowns_before[CONSONANT_I];
+				                               unknowns_before[CONSONANT_I];
 				unknown_sequence_count = 0;
 			}
 		}
-		// Obdobne operacie pre spoluhlasku ako pri samohlaske
+			// Obdobne operacie pre spoluhlasku ako pri samohlaske
 		else if (!IS_VOWEL(input.str.val[i]))
 		{
 			input.mask.val[i] = CONSONANT;
@@ -272,14 +272,14 @@ MaskedString load_masked_string()
 			}
 		}
 		if (
-			!input.one_at_least &&
-			(
-				unknowns_after[VOWEL_I] + counters[VOWEL_I] >= VOWEL_COUNT ||
-			    unknowns_before[VOWEL_I] + counters[VOWEL_I] >= VOWEL_COUNT ||
-			    unknowns_after[CONSONANT_I] + counters[CONSONANT_I] >= CONSONANT_COUNT ||
-				unknowns_before[CONSONANT_I] + counters[CONSONANT_I] >= CONSONANT_COUNT
-			)
-		) input.one_at_least = true;
+				!input.one_at_least &&
+				(
+						unknowns_after[VOWEL_I] + counters[VOWEL_I] >= VOWEL_COUNT ||
+						unknowns_before[VOWEL_I] + counters[VOWEL_I] >= VOWEL_COUNT ||
+						unknowns_after[CONSONANT_I] + counters[CONSONANT_I] >= CONSONANT_COUNT ||
+						unknowns_before[CONSONANT_I] + counters[CONSONANT_I] >= CONSONANT_COUNT
+				)
+				) input.one_at_least = true;
 		previous_symbol = input.mask.val[i];
 	}
 	input.len = i;
@@ -316,27 +316,27 @@ void handle_unknown(MaskedString* bad, Letter previous, Letter next, size_t i, s
 		if (i + 1 < bad->mask.len &&  bad->mask.val[i + 1] == CONSONANT)
 			bad->mask.val[i] = VOWEL;
 	}
-	// Pokial skoro mame samohlasky tak na tomto otazniku ich rozbijeme naschval
+		// Pokial skoro mame samohlasky tak na tomto otazniku ich rozbijeme naschval
 	else if (counter[VOWEL_I] >= VOWEL_COUNT-1)
 		set_counters(bad, CONSONANT, i, &counter[CONSONANT_I], &counter[VOWEL_I]);
 	else if (counter[CONSONANT_I] >= CONSONANT_COUNT-1)
 		set_counters(bad, VOWEL, i, &counter[VOWEL_I], &counter[CONSONANT_I]);
-	// Pokial sa nam countre nepriblizuju k hodnotam tak pozerame dopredu a dozadu.
+		// Pokial sa nam countre nepriblizuju k hodnotam tak pozerame dopredu a dozadu.
 	else if (i+1 < bad->len)
 		// Ak na predchadzajucej pozicii bola samohlaska a dalsia bude tiez samohlaska alebo neznama. Tak aktualnu
 		// unknown nastavim na spoluhlasku aby som rozbil postupnost potenctionalnych 2 SAMOHLASOK.
 		if (previous == VOWEL && (next == UNKNOWN || next == VOWEL))
 			set_counters(bad, CONSONANT, i, &counter[CONSONANT_I], &counter[VOWEL_I]);
-		// Ak na predchadzajucej pozicii bola samohlaska a dalsia bude spoluhlaska tak nastavim na aktualnu unknown hodnotu
-		// samohlasku aby som rozbil postupnost potenctionalnych 2 SPOLUHLASOK
+			// Ak na predchadzajucej pozicii bola samohlaska a dalsia bude spoluhlaska tak nastavim na aktualnu unknown hodnotu
+			// samohlasku aby som rozbil postupnost potenctionalnych 2 SPOLUHLASOK
 		else if (previous == VOWEL && next == CONSONANT)
 			set_counters(bad, VOWEL, i, &counter[VOWEL_I], &counter[CONSONANT_I]);
-		// Ak na predchadzajucej pozicii bola spoluhlaska a dalsia bude samohlaska alebo neznama. Tak nastavim na aktualnu
-		// unknown hodnotu na spoluhlasku
+			// Ak na predchadzajucej pozicii bola spoluhlaska a dalsia bude samohlaska alebo neznama. Tak nastavim na aktualnu
+			// unknown hodnotu na spoluhlasku
 		else if (previous == CONSONANT && (next == UNKNOWN || next == CONSONANT))
 			set_counters(bad, VOWEL, i, &counter[VOWEL_I], &counter[CONSONANT_I]);
-		// Ak na predchadzajucej pozicii bola spoluhlaska a dalsia bude tiez spolhlaska. Tak nastavim na aktualnu unknown
-		// hodnotu samohlasku aby som rozbil postupnost potenctionalnych 2 SPOLUHLASOK
+			// Ak na predchadzajucej pozicii bola spoluhlaska a dalsia bude tiez spolhlaska. Tak nastavim na aktualnu unknown
+			// hodnotu samohlasku aby som rozbil postupnost potenctionalnych 2 SPOLUHLASOK
 		else if (previous == CONSONANT && next == VOWEL)
 			set_counters(bad, CONSONANT, i, &counter[CONSONANT_I], &counter[VOWEL_I]);
 }
@@ -389,14 +389,14 @@ bool resolve_unknown(MaskedString input)
 		free_masked_string(&input);
 		return true;
 	}
-	// Napocitali sme pri zadavani vstupu potrebny pocet hlasok
+		// Napocitali sme pri zadavani vstupu potrebny pocet hlasok
 	else if (!input.unknown_count && input.is_consonant_heavy || input.is_vowel_heavy)
 	{
 		printf("paci\n");
 		free_masked_string(&input);
 		return true;
 	}
-	// Neobsahuje patterny hlasok a ani nemame ziadne otazniky ktorymi by sme vedeli ten pattern vytvorit
+		// Neobsahuje patterny hlasok a ani nemame ziadne otazniky ktorymi by sme vedeli ten pattern vytvorit
 	else if(!input.unknown_count && !input.is_consonant_heavy && !input.is_vowel_heavy)
 	{
 		printf("nepaci\n");
@@ -429,10 +429,10 @@ bool resolve_unknown(MaskedString input)
 	// Pokial sa mu paci najhorsi pripad tak sa mu bude string pacit v tom alebo lepsiom pripade
 	if (is_valid(bad) && (is_valid(vowel_string) && is_valid(consonant_string)))
 		printf("paci\n");
-	// Pokial sa mu najhorsi pripad nepaci ale existuje nejaky iny ktory sa mu paci
+		// Pokial sa mu najhorsi pripad nepaci ale existuje nejaky iny ktory sa mu paci
 	else if (input.one_at_least)
 		printf("neviem\n");
-	// Inak sa mu nepaci
+		// Inak sa mu nepaci
 	else printf("nepaci\n");
 
 	free_masked_string(&input);

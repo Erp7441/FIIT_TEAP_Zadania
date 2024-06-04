@@ -7,7 +7,11 @@
 #define POW(i, val) (i * (size_t)pow(MAX_TASKS, val))
 #define RANGE(value, upper, lower) ( value >= lower && value <= upper )
 
-// https://stackoverflow.com/questions/55772634/palindromic-numbers-divisible-by-any-given-number
+/**
+ * Zdroje:
+ * 1. https://stackoverflow.com/questions/55772634/palindromic-numbers-divisible-by-any-given-number
+ * 2. https://math.stackexchange.com/questions/194956/divisibility-tests-for-palindromes
+ */
 
 typedef struct {
 	size_t tasks, divisor, len;
@@ -42,6 +46,9 @@ void solve(Solution sol)
 		if (dpt > sol.lo_half) continue;
 		if (dpt == sol.lo_half) st = 1;
 
+		// Zdroj 1.
+		// answered Jul 11, 2019 at 12:29
+		// limeeattack
 		if (dpt)
 		{
 			for (size_t i = st; i < MAX_TASKS; i++)
@@ -51,9 +58,9 @@ void solve(Solution sol)
 		else
 		{
 			if (sol.len % 2) for (size_t i = st; i < MAX_TASKS; i++)
-				sol.pal[dpt][POW(i, sol.hi_half) % sol.divisor] += 1;
+					sol.pal[dpt][POW(i, sol.hi_half) % sol.divisor] += 1;
 			else for (size_t i = st; i < MAX_TASKS; i++)
-				sol.pal[dpt][(POW(i, sol.hi_half) + POW(i, sol.lo_half)) % sol.divisor] += 1;
+					sol.pal[dpt][(POW(i, sol.hi_half) + POW(i, sol.lo_half)) % sol.divisor] += 1;
 		}
 	}
 }
@@ -61,9 +68,9 @@ void solve(Solution sol)
 int main()
 {
 	Solution sol = {
-		.tasks = 0,
-		.divisor = 0,
-		.len = 0
+			.tasks = 0,
+			.divisor = 0,
+			.len = 0
 	};
 	alloc(&sol.pal);
 	scanf("%zu", &sol.tasks);

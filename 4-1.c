@@ -82,6 +82,7 @@ bool update(const HillsRange* range, int j)
 	if (j == range->dim.height)
 	{
 		/*
+		 * Okolo 15.00 vo videu na google drive...
 		 * Pocet dobrych susedov pre posledny riadok je sucet poctu dobrych susedov pre predposledny riadok,
 		 * poctu dobrych susedov pre predpredposledny riadok a poctu zlych  susedov pre predpredposledny riadok
 		 */
@@ -91,7 +92,7 @@ bool update(const HillsRange* range, int j)
 		return true;
 	}
 
-	// Ziska pocet vyskytov dobrych a zlych susedov voci current_path pozicii 'j'.
+	// Ziska pocet vyskytov dobrych a zlych susedov voci current pozicii 'j'.
 
 	/*
 	 * Okolo 15.00 vo videu na google drive...

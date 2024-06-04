@@ -14,8 +14,8 @@ typedef struct
 typedef struct
 {
 	int boys, girls, pairs;
-	char input[MIN][MIN];
-	int combs[MIN][MAX][MIN];
+	char input[MIN][MIN];  // Vstupne data
+	int combs[MIN][MAX][MIN];  // Vsetky kombinacie chalpcov a dievcat
 } Solution;
 
 Solution sol = {0, 0, 0};
@@ -33,10 +33,13 @@ int solve(Vector3D pos)
 	if (pos.z == sol.pairs || pos.x == sol.boys) return pos.z == sol.pairs;
 	if (sol.combs[pos.x][pos.y][pos.z] != -1) return sol.combs[pos.x][pos.y][pos.z];
 
+	// Vyriesnie prvej pozicie v matici
 	int total = solve((Vector3D){pos.x + 1, pos.y, pos.z});
 	for (int i = 0; i < sol.girls; i++)
 	{
+		// Posun smerom v pravo
 		if (sol.input[pos.x][i] == 'Y' && RIGHT(i, pos.y) == 0)
+			// Vyriesenie N-tej pozicie v matici
 			total += solve((Vector3D){pos.x + 1, NTH(i, pos.y), pos.z + 1});
 	}
 	sol.combs[pos.x][pos.y][pos.z] = total;
@@ -56,7 +59,6 @@ void init()
 
 int main()
 {
-
 	while (scanf("%d", &sol.pairs) > 0)
 	{
 		init();

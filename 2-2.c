@@ -156,7 +156,7 @@ bool read_line()
 			// Zdroj: https://stackoverflow.com/questions/6647783/check-value-of-least-significant-bit-lsb-and-most-significant-bit-msb-in-c-c
 			if (GET_BIT(i, pos, line->str.len) % 2)
 				add_plus_to_string(line->str, pos, board.prev, line->str.len - pos, &board);
-			// Ak dalsia pozicia bude posledna. Vykoname posledne pridanie pluska
+				// Ak dalsia pozicia bude posledna. Vykoname posledne pridanie pluska
 			else if (pos+1 > line->str.len && line->str.len+1 != board.prev)
 				add_plus_to_string(line->str, 0, board.prev, 0, &board);
 
